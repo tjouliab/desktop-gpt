@@ -8,17 +8,12 @@ function createWindow() {
     height: 600,
     webPreferences: {
       nodeIntegration: true,
-      contextIsolation: true,
+      contextIsolation: false,
     },
   })
 
-  // During development, load the Vite dev server URL
-  if (process.env.NODE_ENV === 'development') {
-    mainWindow.loadURL('http://localhost:5173')
-  } else {
-    // In production, load the index.html from the dist folder
-    mainWindow.loadFile(path.join(__dirname, '../dist/index.html'))
-  }
+  mainWindow.loadURL('http://localhost:5173')
+  // mainWindow.loadFile(path.join(__dirname, '../dist/index.html'))
   mainWindow.webContents.openDevTools()
 }
 
