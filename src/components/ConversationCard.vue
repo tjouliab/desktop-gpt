@@ -32,20 +32,22 @@ function setIsHovered(value: boolean) {
       <p class="text-truncate title-text">{{ title }}</p>
     </template>
     <template v-slot:append>
-      <v-btn
-        v-if="isHovered"
-        class="btn-menu"
-        density="comfortable"
-        variant="tonal"
-        icon="mdi-dots-vertical"
-      ></v-btn>
-      <v-icon v-else-if="pinned" class="pin-icon" icon="mdi-pin" />
+      <div class="append-container">
+        <v-btn
+          v-if="isHovered"
+          class="btn-menu"
+          density="comfortable"
+          variant="tonal"
+          icon="mdi-dots-vertical"
+        ></v-btn>
+        <v-icon v-else-if="pinned" class="pin-icon" icon="mdi-pin" />
+      </div>
     </template>
   </v-btn>
 </template>
 
 <style scoped>
-:deep(.btn-menu.v-btn--icon.v-btn--size-default) {
+:v-deep(.btn-menu.v-btn--icon.v-btn--size-default) {
   --v-btn-size: 1em;
 }
 
@@ -67,6 +69,10 @@ function setIsHovered(value: boolean) {
   width: 200px;
   margin-left: 0.5em;
   text-align: left;
+}
+
+.append-container {
+  width: calc(var(--v-btn-height));
 }
 
 .btn-menu {
