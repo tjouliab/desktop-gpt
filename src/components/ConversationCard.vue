@@ -66,6 +66,7 @@ function setIsHovered(value: boolean) {
 .title-text {
   width: 200px;
   margin-left: 0.5em;
+  text-align: left;
 }
 
 .btn-menu {
