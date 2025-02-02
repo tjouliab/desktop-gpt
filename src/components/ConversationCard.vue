@@ -1,9 +1,15 @@
 <script setup lang="ts">
 import { ref } from 'vue'
+import { DateTime } from 'luxon'
 
 interface ConversationCardProps {
   title: string
   pinned: boolean
+}
+
+export interface ConversationCardDto extends ConversationCardProps {
+  id: number
+  creationDate: DateTime
 }
 
 const { title, pinned } = defineProps<ConversationCardProps>()
@@ -15,46 +21,42 @@ function setIsHovered(value: boolean) {
 </script>
 
 <template>
-  <div
-    class="row-container outline-container"
+  <v-btn
+    class="text-none btn-container"
+    variant="tonal"
     @mouseenter="setIsHovered(true)"
     @mouseleave="setIsHovered(false)"
   >
-    <div class="text-container">
-      <i class="fa-regular fa-comment chat-icon"></i>
-      <p class="title-text">{{ title }}</p>
-    </div>
-    <div>
-      <button v-if="isHovered"></button>
-      <i v-else-if="pinned" class="fa-solid fa-thumbtack pin-icon"></i>
-    </div>
-  </div>
+    <template v-slot:prepend>
+      <v-icon class="chat-icon" icon="mdi-message-outline" />
+      <p class="text-truncate title-text">{{ title }}</p>
+    </template>
+    <template v-slot:append>
+      <v-btn
+        v-if="isHovered"
+        class="btn-menu"
+        density="comfortable"
+        variant="tonal"
+        icon="mdi-dots-vertical"
+      ></v-btn>
+      <v-icon v-else-if="pinned" class="pin-icon" icon="mdi-pin" />
+    </template>
+  </v-btn>
 </template>
 
 <style scoped>
-.row-container {
+:deep(.btn-menu.v-btn--icon.v-btn--size-default) {
+  --v-btn-size: 1em;
+}
+
+.btn-container {
   display: flex;
   flex-direction: row;
-}
-
-.outline-container {
-  height: 2em;
-  border-radius: 1em;
-  border-color: black;
-  border: 1px solid;
-  align-items: center;
-  justify-content: space-between;
-  padding-left: 1em;
-  padding-right: 1em;
   margin-left: 1em;
   margin-right: 1em;
-}
-
-.text-container {
-  flex: 1;
-  display: flex;
+  border-radius: 1em;
   align-items: center;
-  overflow: hidden;
+  justify-content: space-between;
 }
 
 .chat-icon {
@@ -62,11 +64,12 @@ function setIsHovered(value: boolean) {
 }
 
 .title-text {
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  flex: 1;
+  width: 200px;
   margin-left: 0.5em;
+}
+
+.btn-menu {
+  border-radius: 1em;
 }
 
 .pin-icon {
